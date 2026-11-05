@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearnLyt | Knowledge Retention Tool</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">L</span><div><strong>LearnLyt</strong><small>Knowledge Retention</small></div></div>
+    <nav>
+      <button class="nav-link active" data-page="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav-link" data-page="library">▤ <span>My Learning</span></button>
+      <button class="nav-link" data-page="flashcards">▣ <span>Flashcards</span></button>
+      <button class="nav-link" data-page="quiz">✎ <span>Take a Quiz</span></button>
+      <button class="nav-link" data-page="revision">↻ <span>Revision</span></button>
+    </nav>
+    <div class="sidebar-bottom"><div class="mini-profile"><div class="avatar">S</div><div><strong>Student</strong><small>Keep learning!</small></div></div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><p class="eyebrow">YOUR PERSONAL LEARNING SPACE</p><h1 id="page-title">Dashboard</h1></div>
+      <button class="primary-btn" id="quick-add">＋ Add topic</button>
+    </header>
+
+    <section class="page active" id="dashboard">
+      <div class="welcome">
+        <div><p class="eyebrow light">WELCOME BACK</p><h2>Small steps. Strong memory.</h2><p>Learn something today. Remember it tomorrow.</p></div>
+        <div class="welcome-icon">✦</div>
+      </div>
+      <div class="stats-grid">
+        <article class="stat-card"><span class="stat-icon purple">▤</span><p>Total topics</p><h2 id="stat-topics">0</h2><small>In your learning library</small></article>
+        <article class="stat-card"><span class="stat-icon green">✓</span><p>Completed topics</p><h2 id="stat-completed">0</h2><small>Topics marked as learned</small></article>
+        <article class="stat-card"><span class="stat-icon orange">▣</span><p>Flashcards</p><h2 id="stat-cards">0</h2><small>Ready for practice</small></article>
+        <article class="stat-card"><span class="stat-icon blue">↻</span><p>Due for revision</p><h2 id="stat-due">0</h2><small>Keep your memory fresh</small></article>
+      </div>
+      <div class="content-grid">
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">OVERVIEW</p><h3>Learning progress</h3></div><span class="subtle">All topics</span></div><div class="progress-track"><div id="progress-bar"></div></div><div class="progress-caption"><strong id="progress-percent">0%</strong><span id="progress-text">0 of 0 topics completed</span></div></article>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">QUICK ACTION</p><h3>Ready to learn?</h3></div></div><p class="muted">Add a topic, create flashcards, or test what you remember with a short quiz.</p><button class="primary-btn full" data-go="library">＋ Add your first topic</button></article>
+      </div>
+      <article class="panel"><div class="panel-heading"><div><p class="eyebrow">RECENT ACTIVITY</p><h3>Your learning library</h3></div><button class="text-btn" data-go="library">View all →</button></div><div id="recent-list" class="topic-list"></div></article>
+    </section>
+
+    <section class="page" id="library">
+      <div class="section-intro"><div><h2>My learning topics</h2><p class="muted">Organise your notes into small, easy-to-revise topics.</p></div><button class="primary-btn" id="add-topic">＋ New topic</button></div>
+      <div class="toolbar"><input id="search-topics" type="search" placeholder="Search topics..." /><select id="filter-category"><option value="">All categories</option><option>Computer Science</option><option>General Knowledge</option><option>Languages</option><option>Science</option><option>Other</option></select></div>
+      <div id="topic-list" class="topic-grid"></div>
+    </section>
+
+    <section class="page" id="flashcards">
+      <div class="section-intro"><div><h2>Flashcard practice</h2><p class="muted">Recall the answer before you reveal it. Active recall helps strengthen memory.</p></div><button class="primary-btn" id="add-card">＋ Create flashcard</button></div>
+      <div id="flashcard-area"></div>
+    </section>
+
+    <section class="page" id="quiz">
+      <div class="section-intro"><div><h2>Knowledge check</h2><p class="muted">Create a quick multiple-choice quiz from your own notes.</p></div></div>
+      <div class="panel quiz-panel" id="quiz-area"></div>
+    </section>
+
+    <section class="page" id="revision">
+      <div class="section-intro"><div><h2>Revision centre</h2><p class="muted">Topics become due for revision after you add them. Review regularly to retain what you learn.</p></div></div>
+      <div class="panel"><div class="panel-heading"><h3>Topics to review</h3><span class="subtle">Based on your saved topics</span></div><div id="revision-list" class="topic-list"></div></div>
+    </section>
+  </main>
+
+  <dialog id="topic-dialog">
+    <form method="dialog" id="topic-form">
+      <div class="dialog-heading"><div><p class="eyebrow">LEARNING LIBRARY</p><h2 id="topic-dialog-title">Add a topic</h2></div><button class="close-btn" value="cancel" aria-label="Close">×</button></div>
+      <input type="hidden" id="topic-id" />
+      <label>Topic title<input id="topic-title" required maxlength="80" placeholder="e.g. Operating System – Deadlocks" /></label>
+      <label>Category<select id="topic-category"><option>Computer Science</option><option>General Knowledge</option><option>Languages</option><option>Science</option><option>Other</option></select></label>
+      <label>Learning notes<textarea id="topic-notes" rows="5" placeholder="Write the important points you want to remember..."></textarea></label>
+      <div class="dialog-actions"><button class="secondary-btn" value="cancel">Cancel</button><button class="primary-btn" id="save-topic" value="default">Save topic</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="card-dialog">
+    <form method="dialog" id="card-form">
+      <div class="dialog-heading"><div><p class="eyebrow">ACTIVE RECALL</p><h2>Create flashcard</h2></div><button class="close-btn" value="cancel">×</button></div>
+      <label>Question<input id="card-question" required placeholder="What is a process?" /></label>
+      <label>Answer<textarea id="card-answer" rows="4" required placeholder="A process is..."></textarea></label>
+      <label>Related topic<select id="card-topic"></select></label>
+      <div class="dialog-actions"><button class="secondary-btn" value="cancel">Cancel</button><button class="primary-btn" id="save-card" value="default">Save flashcard</button></div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
